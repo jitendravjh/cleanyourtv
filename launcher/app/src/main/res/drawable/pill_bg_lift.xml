@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- focus_style lift: Apple TV buttons, translucent with no rim, solid white when focused. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFFFF" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+    <!-- Reorder button while reorder mode is on (focus is on the tiles then). -->
+    <item android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#596EC1FF" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#47FFFFFF" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+</selector>

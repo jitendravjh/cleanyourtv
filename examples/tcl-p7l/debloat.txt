@@ -1,0 +1,82 @@
+# TCL P7L, India (device G10, product G10_4K_GB_32BIT, model "Smart TV Pro", Realtek, 1.8 GB)
+# Android 12 (Google TV), firmware STT2.230203.001 AS50, software V8-R75PT01-LF1V545, security patch 2025-12-05
+# Same product and build as tcl-55p8ls/ (LF1V543 there): this is that list, minus the six packages this TV
+# does not have, with Prime Video kept.
+#
+# Apply:   TV_HOST=<tv ip> tools/disable.sh examples/tcl-p7l/debloat.txt
+# Undo:    TV_HOST=<tv ip> tools/restore.sh examples/tcl-p7l/debloat.txt com.google.android.apps.tv.launcherx
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# Stock launcher: com.google.android.apps.tv.launcherx. Live TV / HDMI app: com.tcl.tv (HDMI 1 is
+# com.tcl.tvinput/.TvPassThroughService/HW15, HDMI 2 HW16, HDMI 3 HW17).
+# Keep: com.tcl.tv, com.tcl.tvinput, com.tcl.suspension, com.tcl.dashboard, com.tcl.autopair,
+# com.tcl.systemserver, com.tcl.providers.config, com.tcl.initsetup, com.tcl.factory.view, com.tcl.useragreement,
+# com.tcl.globalkeyoverlay, com.tcl.inputmethod.international, com.tcl.hearaid, all com.realtek.* and com.tvos.
+# Kept by choice: Chromecast, AirPlay, Assistant and the remote's mic, USB media, YouTube, Netflix, Prime Video.
+#
+# Firmware updates are off by choice. TCL's updater is inside com.tcl.ttvs (versionUpdateApp
+# SystemUpdateService), so it goes with TCL's analytics. Settings > System update opens Google Play
+# Services' updater (com.google.android.gms/.update.SystemUpdatePanoActivity), which cannot be disabled
+# without breaking the Play Store. Automatic installs are off for it instead:
+#   tools/tv.py 'settings put global ota_disable_automatic_update 1'   (undo: settings delete global ota_disable_automatic_update)
+#
+# Changed outside the list, so restore.sh leaves them; the undo is on the right:
+#   screensaver_components  in.jitendravjh.cleanyourtv/.ClockDream   settings put secure screensaver_components com.google.android.apps.tv.dreamx/.service.Backdrop
+#   ota_disable_automatic_update  1                         settings delete global ota_disable_automatic_update
+#   time_12_24  12 (was 24, so the clock shows AM/PM)       settings put system time_12_24 24
+#   location_mode  3 (was 0, the Wi-Fi pill reads the name)  cmd location set-location-enabled false
+# Launcher setup: launcher/build-and-install.sh with INPUT_KEY_SERVICE=1 HOME_KEY_SERVICE=1 (it also grants
+# APP_AUTO_START, this firmware's name for the op), then
+#   tools/theme.sh examples/tcl-p7l/theme   (dock, the HDMI 1 tile, remote keys, stock_home_redirect)
+#
+# Known quirks on this firmware:
+# - The home network is IPv6-only, so the TV has no usable IPv4: TV_HOST is its fe80:: address with %en0.
+# - Set up in full Google TV mode. In basic mode the firmware leaves out the four apps under
+#   "Shown only in full Google TV mode" below.
+# - The Wi-Fi joined in the setup wizard belongs to setupwraith: forget and re-join it in Settings
+#   before disable.sh can turn setupwraith off.
+# - Settings > Reset, and Accounts and Profiles, hand off to setupwraith, so they do nothing while it is
+#   disabled. Turning setupwraith back on alone gives the TV no Home (its RecoveryActivity takes HOME and
+#   loops while launcherx is off). Run restore.sh with launcherx first, then reset.
+
+# TCL / third-party tracking and analytics
+tv.samba.ssm.ui                        # Samba TV ACR viewing tracking
+com.tcl.ttvs                           # TCL analytics AND TCL's firmware updater: re-enable to get TCL updates
+com.tcl.logkit                         # log capture and upload
+com.google.android.feedback
+
+# TCL content, ads and promos
+com.tcl.waterfall.overseas             # TCL Channel / content feed
+com.tcl.channelplus                    # TCL Live FAST channels
+com.tcl.tv.tclhome_passive             # pushes TCL content to the home screen at boot
+com.tcl.partnercustomizer              # TCL tab on the Google TV home
+com.tcl.interactive                    # TCL TIAS background service
+android.autoinstalls.config.google.gtvpai   # silently installs partner apps
+
+# Retail demo / hotel mode
+com.tcl.exhibit
+com.tcl.esticker
+com.tcl.hotelmenu
+
+# Preloaded apps and services
+com.tcl.guard                          # TGuard memory "cleaner"
+com.tcl.ocean.instructions             # e-manual
+com.tcl.repairguide
+com.tcl.gamebar                        # re-enable for the console game-mode overlay
+com.tcl.UpdatePeripheral               # re-enable to update a TCL soundbar
+com.tcl.t_solo                         # T-Solo "listen alone"
+com.tcl.magiconnectfree                # MagiConnect / T-Cast phone app companion
+com.tcl.miracast                       # screen mirroring from Android phones
+com.google.android.marvin.talkback
+
+# Shown only in full Google TV mode
+com.google.android.play.games          # Google Play Games
+com.google.android.videos              # Google TV / Play Movies & TV
+com.google.android.youtube.tvmusic     # YouTube Music
+com.tcl.smartalexa                     # Alexa
+
+# Needed for the custom launcher. disable.sh skips launcherx until the new launcher owns Home, and
+# launcher/build-and-install.sh disables it. dreamx only after the screensaver is the launcher's clock.
+com.google.android.tungsten.setupwraith
+com.google.android.apps.tv.launcherx
+com.google.android.apps.tv.dreamx      # ambient mode screensaver

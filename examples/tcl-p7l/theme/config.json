@@ -1,0 +1,56 @@
+{
+  "columns": 5,
+  "dock_apps": [
+    "com.tcl.tv",
+    "com.google.android.youtube.tv",
+    "com.netflix.ninja",
+    "in.startv.hotstar",
+    "com.amazon.amazonvideo.livingroom"
+  ],
+  "app_labels": [
+    "com.tcl.tv=HDMI 1"
+  ],
+  "launch_actions": [
+    "com.tcl.tv=input:com.tcl.tvinput/.TvPassThroughService/HW15"
+  ],
+  "live_tv_package": "com.tcl.tv",
+  "settings_key_keycodes": [
+    83
+  ],
+  "app_keys": [
+    "4062:com.netflix.ninja",
+    "4065:com.google.android.youtube.tv",
+    "4099:com.amazon.amazonvideo.livingroom"
+  ],
+  "stock_home_redirect": "com.google.android.apps.tv.launcherx",
+  "ambient_glow": false,
+  "focus_overshoot": false,
+  "icon_only_buttons": false,
+  "show_network_pill": true,
+  "focus_ring": false,
+  "focus_dim": 0,
+  "reduced_motion": true,
+  "wallpaper": true,
+  "wallpaper_dim": 30,
+  "focus_style": "lift",
+  "dock_band": true,
+  "dock_opacity": 6,
+  "dock_low": true,
+  "frost": true,
+  "dock_tint": "dark",
+  "dock_edge": false,
+  "input_key_menu": true,
+  "blocked_keycodes": [
+    4514
+  ],
+  "smooth_scroll": true,
+  "wallpaper_true_color": true,
+  "screensaver_wallpaper": true,
+  "screensaver_centered": true,
+  "dock_title": false,
+  "dock_names": false,
+  "hidden_apps": [
+    "com.tcl.suspension",
+    "com.tcl.dashboard"
+  ]
+}

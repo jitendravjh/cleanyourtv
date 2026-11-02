@@ -1,0 +1,20 @@
+{
+  "ambient_glow": false,
+  "focus_overshoot": false,
+  "focus_ring": false,
+  "focus_dim": 0,
+  "focus_style": "lift",
+  "wallpaper": true,
+  "wallpaper_dim": 30,
+  "dock_band": true,
+  "dock_opacity": 6,
+  "dock_low": true,
+  "frost": true,
+  "dock_tint": "dark",
+  "dock_edge": false,
+  "smooth_scroll": true,
+  "screensaver_wallpaper": true,
+  "screensaver_centered": true,
+  "dock_title": false,
+  "dock_names": false
+}
