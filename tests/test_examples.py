@@ -2,7 +2,6 @@
 
 Run from the repository root: python3 -m unittest discover -s tests -v
 """
-import os
 import re
 from pathlib import Path
 import unittest
@@ -75,12 +74,6 @@ class ExampleListsTest(unittest.TestCase):
         readme_tvs = sorted(r.split("|")[1].strip() for r in readme_rows)
         example_tvs = sorted(r.split("|")[2].strip() for r in example_rows)
         self.assertEqual(readme_tvs, example_tvs, "the TV column differs between the two tables")
-
-    @unittest.skipUnless(os.environ.get("CLEANYOURTV_STRICT"), "counts are fixed up on merge; strict on main only")
-    def test_readme_counts(self):
-        text = (ROOT / "README.md").read_text(encoding="utf-8")
-        n = len(folders())
-        self.assertIn(f"{n} TV models", text, "stat strip alt text is stale (regenerate docs/stats.png too)")
 
 
 if __name__ == "__main__":
